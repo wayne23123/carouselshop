@@ -147,7 +147,6 @@ function stopCarousel() {
   <section class="disCen">
     <div class="card">
       <div class="fz24">您好，歡迎來到 Wayne Lu 的商品列表練習</div>
-      <div>{{ carouselStart }}</div>
       <br />
       <div>這個商品列表使用 HTML + CSS + VUE 製作而成</div>
       <div>先使用 ul li 標籤做 15 個列表並引入圖片</div>
