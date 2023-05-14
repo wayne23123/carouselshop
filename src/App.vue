@@ -4,7 +4,7 @@ import { ref, reactive, computed } from "vue";
 // 控制Carousel-------------------------------------------------------------------------------------------------------
 
 // carouselStart 代表商品列表的 right 屬性 0px
-const carouselStart = ref(-1886);
+const carouselStart = ref(0);
 
 const carouselStep = 210; // 每次移動的距離
 
@@ -13,17 +13,17 @@ let intervalId = null;
 
 // 往右移動 carouselStep 的距離，當超出最右邊時回到最左邊
 function moveCarouselRight() {
-  carouselStart.value += carouselStep;
-  if (carouselStart.value >= 5) {
-    carouselStart.value = -1886;
+  carouselStart.value -= carouselStep;
+  if (carouselStart.value <= -1891) {
+    carouselStart.value = 0;
   }
 }
 
 // 往左移動 carouselStep 的距離，當超出最左邊時回到最左邊
 function moveCarouselLeft() {
-  carouselStart.value -= carouselStep;
-  if (carouselStart.value < -1891) {
-    carouselStart.value = 0;
+  carouselStart.value += carouselStep;
+  if (carouselStart.value > 0) {
+    carouselStart.value = -1890;
   }
 }
 
@@ -64,7 +64,7 @@ function stopCarousel() {
         @mouseleave="startCarousel"
         class="caroselContainer"
       >
-        <ul :style="{ right: carouselStart + 'px' }" class="caroselUl dis">
+        <ul :style="{ left: carouselStart + 'px' }" class="caroselUl dis">
           <li>
             <div class="imgLayout">
               <img src="./assets/1.png" alt="" />
@@ -156,7 +156,7 @@ function stopCarousel() {
         <span class="then">˂</span>
         <span class="number">ul</span> <span class="then">:</span>
         <span class="function">style</span> <span class="then">="</span>
-        <span class="brackets">{</span> <span class="word">right</span>
+        <span class="brackets">{</span> <span class="word">left</span>
         <span class="then">:</span> <span class="word">carouselStart</span>
         <span class="then">+</span> <span class="then">'</span>
         <span class="word">px</span> <span class="then">'</span>
@@ -164,14 +164,14 @@ function stopCarousel() {
         <span class="then">></span>
       </div>
       <div>目標是 做一個 function 把 carouselStart 這個 ref 值</div>
-      <div>在一定時間後增加值來達到將商品列表向右方推的效果</div>
+      <div>在一定時間後減少值來達到將商品列表向右方推的效果</div>
       <div class="bgcVS">
         <div>
           <span class="function">const </span>
           <span class="word">carouselStart</span>
           <span class="then">= </span> <span class="variable">ref</span>
-          <span class="brackets">(</span> <span class="then">-</span>
-          <span class="number">1886</span> <span class="brackets">)</span>
+          <span class="brackets">(</span>
+          <span class="number">0</span><span class="brackets">)</span>
           <span class="then">;</span>
         </div>
         <div>
@@ -181,19 +181,19 @@ function stopCarousel() {
         </div>
         <div class="pTwo">
           <span class="word">carouselStart</span> <span class="word">.</span>
-          <span class="word">value</span> <span class="then">+=</span>
+          <span class="word">value</span> <span class="then">-=</span>
           <span class="number">210</span> <span class="then">;</span>
         </div>
         <div class="pTwo">
           <span class="then">if</span> <span class="brackets">(</span>
           <span class="word">carouselStart.value</span>
-          <span class="then">>=</span> <span class="number">5</span>
+          <span class="then">˂=</span> <span class="number">-1891</span>
           <span class="brackets">){</span>
         </div>
         <div class="pFou">
           <span class="word">carouselStart</span> <span class="word">.</span>
           <span class="word">value</span> <span class="then">=</span>
-          <span class="then"> -</span><span class="number">1886</span>
+          <span class="number">0</span>
           <span class="then">;</span>
         </div>
         <div class="pTwo">
@@ -202,15 +202,13 @@ function stopCarousel() {
         <span class="brackets">}</span>
       </div>
       <div>
-        一開始先定義了一個 carouselStart ref 值為 -1886
-        (讓第1張剛好定位到最左邊)
-      </div>
-      <div>(因為載入15張寬度為210px圖片right:-1886px可以讓圖片從1開始)</div>
-      <div>
-        這個 moveCarouselRight 的 function 每次觸發會將 carouselStart 加上 210
+        一開始先定義了一個 carouselStart ref 值為 0 (讓第1張剛好定位到最左邊)
       </div>
       <div>
-        剛好讓圖片向左移動一張的距離 並且設定 >= 5 時(要剛好讓最後一張顯示)
+        這個 moveCarouselRight 的 function 每次觸發會將 carouselStart 減少 210
+      </div>
+      <div>
+        剛好讓圖片向左移動一張的距離 並且設定 ˂=-1891 時(要剛好讓最後一張顯示)
       </div>
       <div>
         會重置到第一張來達到商品列表陳列的功能 並依照依樣邏輯製作了向右功能
